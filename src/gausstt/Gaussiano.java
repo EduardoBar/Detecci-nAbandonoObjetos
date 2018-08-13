@@ -15,18 +15,19 @@ public class Gaussiano {
     private double[] media;
     private double[] matCova;
     private double alfa;
-    
+    private boolean foreground;    
     public Gaussiano(){
         this.media = new double[2];
         this.matCova = new double[2];
        
-        this.peso = 0.01;
-        this.media[0] = 1;
-        this.media[1] = 1;
-        this.varianza= 1;  
-        this.matCova[0] = 1;
-         this.matCova[1] = 1;
-         this.alfa = 0.2;
+        this.peso = 0.05;
+        this.media[0] = 15;
+        this.media[1] = 15;
+        this.varianza= 30;  
+        this.matCova[0] = 30;
+         this.matCova[1] = 30;
+         this.alfa = 0.005;
+         this.foreground = true;
     }
     
     public double calcularProbabilidad(int[] RGBvect){
@@ -108,5 +109,12 @@ public class Gaussiano {
     
     public void setVarianza(double var){
         this.varianza = var;
+    }
+    
+    public void setIsForeground(boolean isForeground){
+        this.foreground = isForeground;
+    }
+    public boolean isForeground(){
+        return this.foreground;
     }
 }

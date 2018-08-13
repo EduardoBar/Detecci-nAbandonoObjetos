@@ -64,9 +64,9 @@ public class gaussGUI {
       
               
             ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
-          
+       
            Principal:   while (true) {
-    Thread.sleep(30);
+            Thread.sleep(20);
         if (camera.read(frame)) {
           ref++;
             if(ref < 100){
@@ -81,22 +81,23 @@ public class gaussGUI {
           
             Image img = image.getImage();
             BufferedImage buf = (BufferedImage) img;
-             
+            
           
-            exec.scheduleAtFixedRate(new Runnable() {
-              @Override
-              public void run() {
+//            exec.scheduleAtFixedRate(new Runnable() {
+//              @Override
+//              public void run() {
                   BufferedImage buf2 = new BufferedImage(frame.cols(), frame.rows(),BufferedImage.TYPE_INT_RGB);
                   int cont =0;
-                       for (int j = 0; j < frame.cols(); j++) {
+                  for (int j = 0; j < frame.cols(); j++) {
                     for(int h = 0; h < frame.rows(); h++){
                          Color col = new Color(buf.getRGB(j, h));
           //              System.out.println(""+col.getGreen());
                         observacionRGB[0] = col.getGreen();
                         observacionRGB[1] = col.getRed();
+                        
                         Estadisticas1[cont].actualizarObservacion(observacionRGB);
                         if(Estadisticas1[cont].getpPlano()){
-                           buf2.setRGB(j, h, 55-255-255);
+                           buf2.setRGB(j, h, 255-255-255);
                         }else{
                            buf2.setRGB(j, h, 0-0-0);
                         }
@@ -108,8 +109,9 @@ public class gaussGUI {
                 vidpanel2.setIcon(img2);
                 vidpanel2.repaint();
               }
-          }, 0, 1, TimeUnit.MILLISECONDS);
-         
+//          }, 0, 0, TimeUnit.MILLISECONDS);
+       
+            
             
             vidpanel.repaint();
             
@@ -122,7 +124,7 @@ public class gaussGUI {
         
     }
        
-    }
+    
   
   private static BufferedImage Mat2bufferedImage(Mat m) {
          //Method converts a Mat to a Buffered Image

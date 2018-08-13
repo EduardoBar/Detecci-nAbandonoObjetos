@@ -26,30 +26,33 @@ public class MezclarKgauss {
     
     public boolean actualizarGaussianos(int[] observacionRGB){
     
-        this.match = true;int index = 0;
+        this.match = true;
+        int index = 0;
+            
+        organizarParametros();
         
-      
         for(int i = 0; i < this.K; i++){
            
             if(this.gaussMuestra[i].calcularProbabilidad(observacionRGB) <= (this.gaussMuestra[i].getVarianza()*2.5)){
                 this.gaussMuestra[i].actualizarDatos(true,observacionRGB);
-                match = false;
+                match = this.gaussMuestra[i].isForeground();
+          
               //  return match;
-            }else{
-                this.gaussMuestra[i].actualizarDatos(false,observacionRGB);
-               // match = false;
+//            }else{
+//                this.gaussMuestra[i].actualizarDatos(false,observacionRGB);
+//               // match = false;
             }
             
-            if(i < (this.K -1)){
-                if(gaussMuestra[i+1].calcularProbabilidad(observacionRGB) < gaussMuestra[i].calcularProbabilidad(observacionRGB)){
-                    index = i;
-                }
-            }
+//            if(i < (this.K -1)){
+//                if(gaussMuestra[i+1].calcularProbabilidad(observacionRGB) < gaussMuestra[i].calcularProbabilidad(observacionRGB)){
+//                    index = i;
+//                }
+//            }
            // System.out.println("Var "+this.gaussMuestra[i].getVarianza());
         }
         
         
-        if(match == true){
+//        if(match == true){
 //         int index = 0;
 //            for(int x = 0; x < this.K-1; x++){
 //                
@@ -57,18 +60,18 @@ public class MezclarKgauss {
 //                    index = x;
 //                }
 //            }
-            
-            this.gaussMuestra[index].setMedia(observacionRGB);
-            this.gaussMuestra[index].setVarianza(gaussMuestra[index].getVarianza()*10);
-            this.gaussMuestra[index].setPeso(0.01);
+//                      this.gaussMuestra[i].actualizarDatos(false,observacionRGB);
+//            this.gaussMuestra[index].setMedia(observacionRGB);
+//            this.gaussMuestra[index].setVarianza(gaussMuestra[index].getVarianza()*10);
+//            this.gaussMuestra[index].setPeso(0.01);
                     
             
-        }
+        //}
         
         return this.match;
     }
     
-    public boolean organizarParametros(){
+    public void organizarParametros(){
        
           double acum = 0;
         for (int i = 0; i < this.K-1; i++)
@@ -83,15 +86,16 @@ public class MezclarKgauss {
         
         for(int x = 0; x < this.K; x++){
             acum+=this.gaussMuestra[x].getPesos();
-            if(acum >= 0.5 && x < this.K -1){
-               
-                return true;
+            this.gaussMuestra[x].setIsForeground(false);
+            if(acum >= 0.8){
+               this.gaussMuestra[x].setIsForeground(true);
+               // return true;
                 
             }
         }
         
         
-        return false;
+      
     }
     
     public double[] getPesos(){
