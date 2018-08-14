@@ -57,6 +57,7 @@ public class gaussGUI {
     jframe2.setContentPane(vidpanel2);
        jframe2.setSize(800, 500);
     jframe2.setVisible(true);
+    // 307200 345600
     Estadisticas1 = new EstadisticasPixel[307200];
     for(int x = 0; x < 307200; x++){
          Estadisticas1[x] = new EstadisticasPixel();
@@ -66,7 +67,7 @@ public class gaussGUI {
             ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
        
            Principal:   while (true) {
-            Thread.sleep(20);
+           // Thread.sleep(20);
         if (camera.read(frame)) {
           ref++;
             if(ref < 100){
@@ -87,6 +88,7 @@ public class gaussGUI {
 //              @Override
 //              public void run() {
                   BufferedImage buf2 = new BufferedImage(frame.cols(), frame.rows(),BufferedImage.TYPE_INT_RGB);
+                //  System.out.println("fr "+frame.cols()*frame.rows());
                   int cont =0;
                   for (int j = 0; j < frame.cols(); j++) {
                     for(int h = 0; h < frame.rows(); h++){
