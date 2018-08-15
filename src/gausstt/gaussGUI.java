@@ -71,7 +71,7 @@ public class gaussGUI {
         if (camera.read(frame)) {
           ref++;
          
-            if(ref < 100){
+            if(ref < 950){
               
                 continue Principal;
                
@@ -102,7 +102,7 @@ public class gaussGUI {
                         observacionRGB[0] = col.getGreen();
                         observacionRGB[1] = col.getRed();
                         //inicializar medias
-                        if(ref == 100){
+                        if(ref == 950){
                             Estadisticas1[cont] = new EstadisticasPixel();
                            for(int k = 0; k < 3; k++){
                               

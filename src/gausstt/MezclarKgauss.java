@@ -36,23 +36,23 @@ public class MezclarKgauss {
             if(this.gaussMuestra[i].calcularProbabilidad(observacionRGB) <= (Math.sqrt(this.gaussMuestra[i].getVarianza()))*2.5){
                 this.gaussMuestra[i].actualizarDatos(true,observacionRGB);
                this. match = this.gaussMuestra[i].isForeground();
-                //matchedAny = true;
+                matchedAny = true;
               //  return match;
             }else{
                 this.gaussMuestra[i].actualizarDatos(false,observacionRGB);
                // match = false;
             }
 //            
-//            if(i < (this.K -1)){
-//                if(gaussMuestra[i+1].calcularProbabilidad(observacionRGB) < gaussMuestra[i].calcularProbabilidad(observacionRGB)){
-//                    index = i;
-//                }
-//            }
+            if(i < (this.K -1)){
+                if(gaussMuestra[i+1].calcularProbabilidad(observacionRGB) < gaussMuestra[i].calcularProbabilidad(observacionRGB)){
+                    index = i;
+                }
+            }
            // System.out.println("Var "+this.gaussMuestra[i].getVarianza());
         }
         
 ////        
-//       if(matchedAny == false){
+       if(matchedAny == false){
 ////         int index = 0;
 ////            for(int x = 0; x < this.K-1; x++){
 ////                
@@ -61,12 +61,12 @@ public class MezclarKgauss {
 ////                }
 ////            }
 ////                      this.gaussMuestra[i].actualizarDatos(false,observacionRGB);
-//            this.gaussMuestra[index].setMedia(observacionRGB);
-//            this.gaussMuestra[index].setVarianza(gaussMuestra[index].getVarianza()*2);
-//            this.gaussMuestra[index].setPeso(0.1);
+            this.gaussMuestra[index].setMedia(observacionRGB);
+            this.gaussMuestra[index].setVarianza(gaussMuestra[index].getVarianza()*2);
+            this.gaussMuestra[index].setPeso(0.1);
 ////                    
 ////            
-//        }
+        }
         
         return this.match;
     }

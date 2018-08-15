@@ -23,10 +23,10 @@ public class Gaussiano {
         this.peso = 0.05;
        // this.media[0] = 1;
        // this.media[1] = 1;
-        this.varianza= 20;  
-        this.matCova[0] = 20;
-         this.matCova[1] = 20;
-         this.alfa = 0.005;
+        this.varianza= 15;  
+        this.matCova[0] = 15;
+         this.matCova[1] = 15;
+         this.alfa = 0.002;
          this.foreground = false;
     }
     
