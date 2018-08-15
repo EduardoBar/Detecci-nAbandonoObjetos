@@ -42,6 +42,10 @@ public class EstadisticasPixel {
     }
     
     
+    public MezclarKgauss getMezclaPix(){
+        return this.mezclaPixel1;
+    }
+    
     
     
 }

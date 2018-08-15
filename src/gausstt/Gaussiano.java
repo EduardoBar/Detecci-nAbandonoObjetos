@@ -21,8 +21,8 @@ public class Gaussiano {
         this.matCova = new double[2];
        
         this.peso = 0.05;
-        this.media[0] = 10;
-        this.media[1] = 10;
+       // this.media[0] = 1;
+       // this.media[1] = 1;
         this.varianza= 20;  
         this.matCova[0] = 20;
          this.matCova[1] = 20;
@@ -37,8 +37,10 @@ public class Gaussiano {
 //        double detMat = 0;
 //        double[] nuevoVect = new double[2];
 //        double[] nuevoVect2 = new double[2];
-        exponencialIzq = (1/((2*Math.PI)*Math.sqrt(this.matCova[0]*this.matCova[1])))*Math.exp(((((1/this.varianza)*Math.pow(RGBvect[0], 2))-(2*(1/this.varianza)*RGBvect[0]*this.media[0])+((1/this.varianza)*Math.pow(this.media[0], 2)))+(((1/this.varianza)*Math.pow(RGBvect[1], 2))-(2*(1/this.varianza)*RGBvect[1]*this.media[1])+((1/this.varianza)*Math.pow(this.media[1], 2))))/2);
+        //exponencialIzq = (1/((2*Math.PI)*Math.sqrt(this.matCova[0]*this.matCova[1])))*Math.exp(((((1/this.varianza)*Math.pow(RGBvect[0], 2))-(2*(1/this.varianza)*RGBvect[0]*this.media[0])+((1/this.varianza)*Math.pow(this.media[0], 2)))+(((1/this.varianza)*Math.pow(RGBvect[1], 2))-(2*(1/this.varianza)*RGBvect[1]*this.media[1])+((1/this.varianza)*Math.pow(this.media[1], 2))))/2);
+          
         
+                exponencialIzq = (1/((2*Math.PI)*Math.sqrt(this.matCova[0]*this.matCova[1])))*Math.exp((((1/this.varianza)*Math.pow(RGBvect[0],2))-((2/this.varianza)*RGBvect[0]*this.media[0])+((1/this.varianza)*Math.pow(this.media[0],2))   +  ((1/this.varianza)*Math.pow(RGBvect[1],2))-((2/this.varianza)*RGBvect[1]*this.media[1])+((1/this.varianza)*Math.pow(this.media[1],2)))/2);
     
 //        
 //        nuevoVect[0] = RGBvect[0] - media[0];
@@ -72,8 +74,8 @@ public class Gaussiano {
             
         this.media[0] = ((1-probInv)*this.media[0]) + probInv*observacionRGB[0];
         this.media[1] = ((1-probInv)*this.media[1]) + probInv*observacionRGB[1];
-     //   probInv2 = this.alfa*calcularProbabilidad(observacionRGB);
-        this.varianza = ((1-probInv)*this.varianza)*probInv*((Math.pow(observacionRGB[0],2)-Math.pow(this.media[0],2))+(Math.pow(observacionRGB[1],2)-Math.pow(this.media[1],2)));
+       probInv2 = this.alfa*calcularProbabilidad(observacionRGB);
+        this.varianza = ((1-probInv2)*this.varianza)+probInv2*((Math.pow(observacionRGB[0],2)-(2*observacionRGB[0]*this.media[0])+Math.pow(this.media[0],2))+(Math.pow(observacionRGB[1],2)-(2*observacionRGB[1]*this.media[1])+Math.pow(this.media[1],2)));
         this.matCova [0] = this.varianza;
         this.matCova [1] = this.varianza;
             this.peso = ((1-this.alfa)*peso) + this.alfa;

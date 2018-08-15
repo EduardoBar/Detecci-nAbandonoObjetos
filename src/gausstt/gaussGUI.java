@@ -59,9 +59,9 @@ public class gaussGUI {
     jframe2.setVisible(true);
     // 307200 345600
     Estadisticas1 = new EstadisticasPixel[307200];
-    for(int x = 0; x < 307200; x++){
-         Estadisticas1[x] = new EstadisticasPixel();
-    }
+//    for(int x = 0; x < 307200; x++){
+//         Estadisticas1[x] = new EstadisticasPixel();
+//    }
       
               
             ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
@@ -70,11 +70,16 @@ public class gaussGUI {
            // Thread.sleep(20);
         if (camera.read(frame)) {
           ref++;
+         
             if(ref < 100){
               
                 continue Principal;
                
             }
+            
+            if(ref == 115){
+                  System.err.println("");
+              }
             int [] observacionRGB = new int[2];
           
             ImageIcon image = new ImageIcon(Mat2bufferedImage(frame));
@@ -82,7 +87,7 @@ public class gaussGUI {
           
             Image img = image.getImage();
             BufferedImage buf = (BufferedImage) img;
-            
+         
           
 //            exec.scheduleAtFixedRate(new Runnable() {
 //              @Override
@@ -96,8 +101,16 @@ public class gaussGUI {
           //              System.out.println(""+col.getGreen());
                         observacionRGB[0] = col.getGreen();
                         observacionRGB[1] = col.getRed();
-                        
+                        //inicializar medias
+                        if(ref == 100){
+                            Estadisticas1[cont] = new EstadisticasPixel();
+                           for(int k = 0; k < 3; k++){
+                              
+                             Estadisticas1[cont].getMezclaPix().gaussMuestra[k].setMedia(observacionRGB);
+                           }
+                        }
                         Estadisticas1[cont].actualizarObservacion(observacionRGB);
+                       
                         if(Estadisticas1[cont].getpPlano()){
                            buf2.setRGB(j, h, 255-255-255);
                         }else{
@@ -109,11 +122,11 @@ public class gaussGUI {
                 }
                 ImageIcon img2 = new ImageIcon(buf2);
                 vidpanel2.setIcon(img2);
-                vidpanel2.repaint();
+                
               }
 //          }, 0, 0, TimeUnit.MILLISECONDS);
        
-            
+            vidpanel2.repaint();
             
             vidpanel.repaint();
             
@@ -142,6 +155,8 @@ public class gaussGUI {
      System.arraycopy(b, 0, targetPixels, 0, b.length);  
      return image;
   }
+
+
   
  }
         
