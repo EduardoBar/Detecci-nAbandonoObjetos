@@ -42,31 +42,25 @@ public class MezclarKgauss {
                 this.gaussMuestra[i].actualizarDatos(false,observacionRGB);
                // match = false;
             }
-//            
-            if(i < (this.K -1)){
-                if(gaussMuestra[i+1].calcularProbabilidad(observacionRGB) < gaussMuestra[i].calcularProbabilidad(observacionRGB)){
-                    index = i;
-                }
-            }
+ ////////////////////           Si se activa, regresa respuesta de actualización frecuente
+//            if(i < (this.K -1)){
+//                if(gaussMuestra[i+1].calcularProbabilidad(observacionRGB) < gaussMuestra[i].calcularProbabilidad(observacionRGB)){
+//                    index = i;
+//                }
+//            }
            // System.out.println("Var "+this.gaussMuestra[i].getVarianza());
         }
         
-////        
-       if(matchedAny == false){
-////         int index = 0;
-////            for(int x = 0; x < this.K-1; x++){
-////                
-////                if(gaussMuestra[x+1].calcularProbabilidad(observacionRGB) < gaussMuestra[x].calcularProbabilidad(observacionRGB)){
-////                    index = x;
-////                }
-////            }
-////                      this.gaussMuestra[i].actualizarDatos(false,observacionRGB);
-            this.gaussMuestra[index].setMedia(observacionRGB);
-            this.gaussMuestra[index].setVarianza(gaussMuestra[index].getVarianza()*2);
-            this.gaussMuestra[index].setPeso(0.1);
-////                    
-////            
-        }
+////        // ////////////////////           Si se activa, regresa respuesta de actualización frecuente
+//       if(matchedAny == false){
+//////         int index = 0;
+
+//            this.gaussMuestra[index].setMedia(observacionRGB);
+//            this.gaussMuestra[index].setVarianza(gaussMuestra[index].getVarianza()*3);
+//            this.gaussMuestra[index].setPeso(0.1);
+//////                return this.match =     
+//////            
+//        }
         
         return this.match;
     }

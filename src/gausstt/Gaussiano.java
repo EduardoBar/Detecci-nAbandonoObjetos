@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package gausstt;
-
+ 
 /**
  *
  * @author Eduardo
@@ -26,7 +26,7 @@ public class Gaussiano {
         this.varianza= 15;  
         this.matCova[0] = 15;
          this.matCova[1] = 15;
-         this.alfa = 0.002;
+         this.alfa = 0.005;
          this.foreground = false;
     }
     
@@ -40,7 +40,7 @@ public class Gaussiano {
         //exponencialIzq = (1/((2*Math.PI)*Math.sqrt(this.matCova[0]*this.matCova[1])))*Math.exp(((((1/this.varianza)*Math.pow(RGBvect[0], 2))-(2*(1/this.varianza)*RGBvect[0]*this.media[0])+((1/this.varianza)*Math.pow(this.media[0], 2)))+(((1/this.varianza)*Math.pow(RGBvect[1], 2))-(2*(1/this.varianza)*RGBvect[1]*this.media[1])+((1/this.varianza)*Math.pow(this.media[1], 2))))/2);
           
         
-                exponencialIzq = (1/((2*Math.PI)*Math.sqrt(this.matCova[0]*this.matCova[1])))*Math.exp((((1/this.varianza)*Math.pow(RGBvect[0],2))-((2/this.varianza)*RGBvect[0]*this.media[0])+((1/this.varianza)*Math.pow(this.media[0],2))   +  ((1/this.varianza)*Math.pow(RGBvect[1],2))-((2/this.varianza)*RGBvect[1]*this.media[1])+((1/this.varianza)*Math.pow(this.media[1],2)))/2);
+         exponencialIzq = (1/((2*Math.PI)*Math.sqrt(this.matCova[0]*this.matCova[1])))*Math.exp((((1/this.varianza)*Math.pow(RGBvect[0],2))-((2/this.varianza)*RGBvect[0]*this.media[0])+((1/this.varianza)*Math.pow(this.media[0],2))   +  ((1/this.varianza)*Math.pow(RGBvect[1],2))-((2/this.varianza)*RGBvect[1]*this.media[1])+((1/this.varianza)*Math.pow(this.media[1],2)))/2);
     
 //        
 //        nuevoVect[0] = RGBvect[0] - media[0];

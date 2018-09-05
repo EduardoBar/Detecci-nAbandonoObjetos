@@ -18,11 +18,15 @@ public class EstadisticasPixel {
     private boolean pPlano = false;
     int B;
     private long startTime,refTime;
+    private int IDregion;
+    private int regionColor;
     
 
     public EstadisticasPixel() {
         
         this.mezclaPixel1 = new MezclarKgauss(3);
+        regionColor =0;
+        IDregion =0;
       
    
     
@@ -46,6 +50,31 @@ public class EstadisticasPixel {
         return this.mezclaPixel1;
     }
     
+    public int getRegion(){
+        return this.IDregion;
+    }
     
+    public void setRegion(int region){
+        this.IDregion = region;
+    }
+    
+    public int getRegioncolor(){
+        return this.regionColor;
+    }
+    
+    public void setRegioncolor(int col){
+        
+        this.regionColor = col;
+        
+    }
+    
+    public boolean isRegion(){
+        if(this.IDregion == 0){
+            return false;
+        }
+            return true;  
+        
+        
+    }
     
 }

@@ -31,12 +31,14 @@ import static org.opencv.videoio.Videoio.CV_CAP_PROP_FPS;
  */
 public class gaussGUI {
  
-  static EstadisticasPixel[] Estadisticas1;
+  static EstadisticasPixel[][] Estadisticas1;
   static Mat frame;
   static VideoCapture camera;
   static JFrame jframe,jframe2;
   static JLabel vidpanel,vidpanel2;
   static int ref = 0;
+  static int nRegiones = 0;
+  static int delta = 30;
     public static void main(String[] args) throws InterruptedException {
         
          long refTime = 0;
@@ -58,7 +60,7 @@ public class gaussGUI {
        jframe2.setSize(800, 500);
     jframe2.setVisible(true);
     // 307200 345600
-    Estadisticas1 = new EstadisticasPixel[307200];
+    Estadisticas1 = new EstadisticasPixel[640][480];
 //    for(int x = 0; x < 307200; x++){
 //         Estadisticas1[x] = new EstadisticasPixel();
 //    }
@@ -77,7 +79,7 @@ public class gaussGUI {
                
             }
             
-            if(ref == 115){
+            if(ref == 2000){
                   System.err.println("");
               }
             int [] observacionRGB = new int[2];
@@ -95,26 +97,122 @@ public class gaussGUI {
                   BufferedImage buf2 = new BufferedImage(frame.cols(), frame.rows(),BufferedImage.TYPE_INT_RGB);
                 //  System.out.println("fr "+frame.cols()*frame.rows());
                   int cont =0;
-                  for (int j = 0; j < frame.cols(); j++) {
-                    for(int h = 0; h < frame.rows(); h++){
-                         Color col = new Color(buf.getRGB(j, h));
+                  
+                  for (int j = 0; j < frame.rows(); j++) {
+                    for(int h = 0; h < frame.cols(); h++){
+                        int regActual =0;
+                        int colorActual =0;
+                        
+                         Color col = new Color(buf.getRGB(h, j));
           //              System.out.println(""+col.getGreen());
                         observacionRGB[0] = col.getGreen();
                         observacionRGB[1] = col.getRed();
                         //inicializar medias
                         if(ref == 950){
-                            Estadisticas1[cont] = new EstadisticasPixel();
+                            Estadisticas1[h][j] = new EstadisticasPixel();
                            for(int k = 0; k < 3; k++){
                               
-                             Estadisticas1[cont].getMezclaPix().gaussMuestra[k].setMedia(observacionRGB);
+                             Estadisticas1[h][j].getMezclaPix().gaussMuestra[k].setMedia(observacionRGB);
+                           
                            }
                         }
-                        Estadisticas1[cont].actualizarObservacion(observacionRGB);
-                       
-                        if(Estadisticas1[cont].getpPlano()){
-                           buf2.setRGB(j, h, 255-255-255);
+                        
+                       //Verificar si es pixel de primer plano, y actualizar datos de las distribuciones
+                        Estadisticas1[h][j].actualizarObservacion(observacionRGB);
+                        
+                         
+                       //Operaciones sobre el pixel actual, basadas en si es primer plano o no
+                        if(Estadisticas1[h][j].getpPlano()){
+                           if(!Estadisticas1[h][j].isRegion()){
+          
+                                
+                                    
+                             
+                 
+//           
+                                            for(int y = 0; y < delta; y++){
+                                                
+                                                 if(Estadisticas1[h][j+y].isRegion()){
+                                                        regActual = Estadisticas1[h][j+y].getRegion();
+                                                        colorActual = Estadisticas1[h][j+y].getRegioncolor();
+                                                        break;
+                                                    }
+                                                
+                                                for(int x = 0; x < delta; x++){
+                                                   if(h+x >= frame.cols()){
+                                                       break;
+                                                    
+                                                   }else{
+                                                    if(Estadisticas1[h+x][j].isRegion()){
+                                                        regActual = Estadisticas1[h+x][j].getRegion();
+                                                        colorActual = Estadisticas1[h+x][j].getRegioncolor();
+                                                        break;
+                                                    }
+                                                   }
+                                                   
+                                                    
+                                             
+                                                }
+                                                
+                                            }
+                                            
+                                            
+                                            if(regActual == 0){
+                                                 regActual = nuevaRegion();
+                                                 colorActual = crearColorRegion();
+                                            }
+                                            
+                                              for(int y = 0; y < delta; y++){
+                                                
+                                                 if(Estadisticas1[h][j+y].isRegion()){
+                                                      Estadisticas1[h][j+y].setRegion(regActual);
+                                                       Estadisticas1[h][j+y].setRegioncolor(colorActual);
+                                                          buf2.setRGB(h, j+y, colorActual);
+                                                       
+                                                    }
+                                                
+                                                for(int x = 0; x < delta; x++){
+                                                     if(h+x >= frame.cols()){
+                                                       continue;
+                                                   }else{
+                                                       if(Estadisticas1[h+x][j].getpPlano()){
+                                                        Estadisticas1[h+x][j].setRegion(regActual);
+                                                        Estadisticas1[h+x][j].setRegioncolor(colorActual);
+                                                        buf2.setRGB(h+x, j, colorActual);
+                                                        }
+                                                     }
+                                                    
+                                             
+                                                }
+                                                
+                                            }
+                                            
+                                            
+//                                                
+//                                                
+//                                                    if( (h-x) == frame.cols() || (h+x) == frame.cols() || (j-x) == frame.rows() || (j+x) == frame.rows()){
+//                                                        continue;
+//                                                    }
+
+//                                        
+//                                        
+                                           
+                                    
+                            
+                            
+                                   
+                                
+                                ///////////
+                            }else{
+                              
+                              buf2.setRGB(h, j, Estadisticas1[h][j].getRegioncolor());
+                            }                         
+                            
+//                           buf2.setRGB(h, j, 255-255-255);
                         }else{
-                           buf2.setRGB(j, h, 0-0-0);
+                            Estadisticas1[h][j].setRegion(0);
+                            Estadisticas1[h][j].setRegioncolor(0);
+                           buf2.setRGB(h, j, 0-0-0);
                         }
                         cont++;
             
@@ -129,14 +227,34 @@ public class gaussGUI {
             vidpanel2.repaint();
             
             vidpanel.repaint();
-            
-     
-          
+       
+                    
 //               long endTime = System.currentTimeMillis();
 //                refTime += (endTime - startTime);
                 
         }
         
+    }
+    
+    /**
+     *
+     * @return
+     */
+    public static int crearColorRegion(){
+        
+         int r = (int)(Math.random()*256); //red
+         int g = (int)(Math.random()*256); //green
+         int b = (int)(Math.random()*256); //blue
+ 
+        int p = (r<<16) | (g<<8) | b; //pixel
+        
+        return p;
+//                                
+        
+    }
+    
+    public static int nuevaRegion(){
+        return   nRegiones++;
     }
        
     
