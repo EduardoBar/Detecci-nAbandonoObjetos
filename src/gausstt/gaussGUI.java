@@ -38,7 +38,7 @@ public class gaussGUI {
   static JLabel vidpanel,vidpanel2;
   static int ref = 0;
   static int nRegiones = 0;
-  static int delta = 30;
+  static int delta = 60;
     public static void main(String[] args) throws InterruptedException {
         
          long refTime = 0;
@@ -127,7 +127,9 @@ public class gaussGUI {
           
                                 
                                     
-                             
+                               try {
+                                   
+                              
                  
 //           
                                             for(int y = 0; y < delta; y++){
@@ -137,23 +139,34 @@ public class gaussGUI {
                                                         colorActual = Estadisticas1[h][j+y].getRegioncolor();
                                                         break;
                                                     }
+                                                 
+                                                    if(Estadisticas1[h][j-y].isRegion()){
+                                                        regActual = Estadisticas1[h][j-y].getRegion();
+                                                        colorActual = Estadisticas1[h][j-y].getRegioncolor();
+                                                        break;
+                                                    }
                                                 
                                                 for(int x = 0; x < delta; x++){
-                                                   if(h+x >= frame.cols()){
-                                                       break;
-                                                    
-                                                   }else{
+                                                 
                                                     if(Estadisticas1[h+x][j].isRegion()){
                                                         regActual = Estadisticas1[h+x][j].getRegion();
                                                         colorActual = Estadisticas1[h+x][j].getRegioncolor();
                                                         break;
                                                     }
-                                                   }
-                                                   
                                                     
-                                             
-                                                }
-                                                
+                                                    
+                                                   
+                                                   
+                                                  
+                                                   
+                                                     if(Estadisticas1[h-x][j].isRegion()){
+                                                        regActual = Estadisticas1[h-x][j].getRegion();
+                                                        colorActual = Estadisticas1[h-x][j].getRegioncolor();
+                                                        break;
+                                                    }
+                                                   
+                                                  
+                                               }
                                             }
                                             
                                             
@@ -170,22 +183,41 @@ public class gaussGUI {
                                                           buf2.setRGB(h, j+y, colorActual);
                                                        
                                                     }
+                                                   if(Estadisticas1[h][j-y].isRegion()){
+                                                      Estadisticas1[h][j-y].setRegion(regActual);
+                                                       Estadisticas1[h][j-y].setRegioncolor(colorActual);
+                                                          buf2.setRGB(h, j-y, colorActual);
+                                                       
+                                                    }
                                                 
                                                 for(int x = 0; x < delta; x++){
-                                                     if(h+x >= frame.cols()){
-                                                       continue;
-                                                   }else{
+                                                  
                                                        if(Estadisticas1[h+x][j].getpPlano()){
                                                         Estadisticas1[h+x][j].setRegion(regActual);
                                                         Estadisticas1[h+x][j].setRegioncolor(colorActual);
                                                         buf2.setRGB(h+x, j, colorActual);
                                                         }
-                                                     }
+                                                    
+                                                     
+                                                     
+                                                    
+                                                     
+                                                     if(Estadisticas1[h-x][j].getpPlano()){
+                                                        Estadisticas1[h-x][j].setRegion(regActual);
+                                                        Estadisticas1[h-x][j].setRegioncolor(colorActual);
+                                                        buf2.setRGB(h-x, j, colorActual);
+                                                        }
+                                                     
                                                     
                                              
                                                 }
                                                 
-                                            }
+                                              }
+                                              
+                                               } catch (Exception e) {
+                              
+                                               }
+                              
                                             
                                             
 //                                                
