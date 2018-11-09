@@ -20,13 +20,14 @@ public class EstadisticasPixel {
     private long startTime,refTime;
     private int IDregion;
     private int regionColor;
-    
+    private int RGB[];
 
     public EstadisticasPixel() {
         
         this.mezclaPixel1 = new MezclarKgauss(3);
         regionColor =0;
         IDregion =0;
+        RGB = new int[2];
       
    
     
@@ -75,6 +76,20 @@ public class EstadisticasPixel {
             return true;  
         
         
+    }
+
+    /**
+     * @return the RGB
+     */
+    public int[] getRGB() {
+        return RGB;
+    }
+
+    /**
+     * @param RGB the RGB to set
+     */
+    public void setRGB(int[] RGB) {
+        this.RGB = RGB;
     }
     
 }
